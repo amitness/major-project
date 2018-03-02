@@ -19,7 +19,7 @@ def extractImages(pathIn, pathOut):
   vidcap.release()
 
 sampleVideo = 'to_segment.mp4'
-dest_path = '/home/kamal/Desktop/major-project/Segment/frames/'
+dest_path = './frames/'
 extractImages(sampleVideo, dest_path) # Choose your PathOut yourself.
 
 
@@ -40,7 +40,7 @@ def frames_to_video(pathIn,pathOut,fps):
        out.write(image_array[i])
    out.release()
 
-pathIn = '/home/kamal/Desktop/major-project/Segment/frames/'
+pathIn = './frames/'
 pathOut =  'joined_video.mp4'
 fps = 23.976023976023978 #this fps is evaluated in extractImage method.
 frames_to_video(pathIn,pathOut,fps)
