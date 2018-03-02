@@ -19,7 +19,7 @@ def extractImages(pathIn, pathOut):
   vidcap.release()
 
 sampleVideo = 'to_segment.mp4'
-dest_path = '/home/kamal/Desktop/major-project/frames/'
+dest_path = '/home/kamal/Desktop/major-project/Segment/frames/'
 extractImages(sampleVideo, dest_path) # Choose your PathOut yourself.
 
 
@@ -32,7 +32,7 @@ def frames_to_video(pathIn,pathOut,fps):
    for i in range(len(files)-1):
        img = cv2.imread(pathIn + files[i])
        size =  (img.shape[1],img.shape[0])
-       img = cv2.resize(img,size)
+       img = cv2.resize(img,size,interpolation = cv2.INTER_CUBIC)
        image_array.append(img)
    fourcc = cv2.VideoWriter_fourcc('D', 'I', 'V', 'X')
    out = cv2.VideoWriter(pathOut,fourcc, fps, size)
@@ -40,7 +40,7 @@ def frames_to_video(pathIn,pathOut,fps):
        out.write(image_array[i])
    out.release()
 
-pathIn = '/home/kamal/Desktop/major-project/frames/'
+pathIn = '/home/kamal/Desktop/major-project/Segment/frames/'
 pathOut =  'joined_video.mp4'
 fps = 23.976023976023978 #this fps is evaluated in extractImage method.
 frames_to_video(pathIn,pathOut,fps)
