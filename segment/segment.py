@@ -7,7 +7,6 @@ def extractImages(pathIn, pathOut):
   print ("Segmenting....")
   os.makedirs(pathOut, exist_ok=True) # Replace Path with your desired Path.
   vidcap = cv2.VideoCapture(pathIn)
-  fps = vidcap.get(cv2.CAP_PROP_FPS)
   success,image = vidcap.read()
   count = 0
   while success:
@@ -19,6 +18,11 @@ def extractImages(pathIn, pathOut):
 sampleVideo = 'to_segment.mp4'
 dest_path = './frames/'
 extractImages(sampleVideo, dest_path) # Choose your PathOut yourself.
+
+def extract_fps(path):
+  vidcap = cv2.VideoCapture(path)
+  fps = vidcap.get(cv2.CAP_PROP_FPS)
+  return fps
 
 
 #Combine respective frames into a video.
@@ -41,5 +45,5 @@ def frames_to_video(pathIn,pathOut,fps):
 
 pathIn = './frames/'
 pathOut =  'joined_video.mp4'
-fps = 23.976023976023978 #this fps is evaluated in extractImage method.
+fps = extract_fps(sampleVideo) #this fps is evaluated in extractImage method.
 frames_to_video(pathIn,pathOut,fps)
