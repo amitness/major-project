@@ -2,10 +2,13 @@ import os
 import cv2
 
 
-class Video(object):
+class VideoScaler(object):
 
     def __init__(self, path_in, path_out):
-        self.__path_in = path_in
+        if  os.path.exists(path_in):
+            self.__path_in = path_in
+        else:
+            raise IOError('File does not exist: %s' % path_in)
         self.__path_out  = path_out
 
     # Segment video into respective frames.
@@ -46,6 +49,6 @@ class Video(object):
         scaled_frames = self.scale_frames(frames, scale_x, scale_y)
         self.frames_to_video(scaled_frames, fps)
 
-
-video = Video('to_segment.mp4', './out.mp4')
-video.scale_video(scale_x = 2, scale_y = 2)
+if  __name__ == '__main__':
+    video = VideoScaler('to_segment.mp4', './out.mp4')
+    video.scale_video(scale_x = 2, scale_y = 2)
