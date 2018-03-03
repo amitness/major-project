@@ -49,12 +49,18 @@ def frames_to_video(frames, fps, pathOut="./out.mp4"):
        out.write(frame)
     out.release()
 
+def scale_video(video_location, dest_path="./out.mp4", scaleX=2, scaleY=2):
+    fps, frames = extract_frames(video_location)  # Choose your PathOut yourself.
+    scaled_frames = scale_frames(frames, scaleX, scaleY)
+    frames_to_video(scaled_frames, fps, dest_path)
+
 if __name__ == '__main__':
     video_location = 'to_segment.mp4'
+    scale_video(video_location, dest_path="./out.mp4", scaleX=2, scaleY=2)
     # dest_path = './frames/'
-    fps, frames = extract_frames(video_location)  # Choose your PathOut yourself.
-    scaled_frames = scale_frames(frames)
+    # fps, frames = extract_frames(video_location)  # Choose your PathOut yourself.
+    # scaled_frames = scale_frames(frames)
     # pathIn = './frames/'
     # pathOut =  'joined_video.mp4'
     # fps = extract_fps(sample_video)  # this fps is evaluated in extractImage method.
-    frames_to_video(scaled_frames, fps)
+    # frames_to_video(scaled_frames, fps)
