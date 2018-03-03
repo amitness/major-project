@@ -1,52 +1,66 @@
 import os
 import cv2
+import subprocess
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
 
-# Segment video into respective frames.
-def extract_frames(pathIn):
-    print("Extracting frames from video ...")
-    vidcap = cv2.VideoCapture(pathIn)
-    fps = vidcap.get(cv2.CAP_PROP_FPS)
-    success, frame = vidcap.read()
-    frames = []
-    while success:
-        frames.append(frame)
+class VideoScaler(object):
+
+    def __init__(self, path_in, path_out):
+        if  os.path.exists(path_in):
+            self.__path_in = path_in
+        else:
+            raise IOError('File does not exist: {}'.format(path_in))
+        self.__path_out  = path_out
+
+    def extract_frames(self):
+        logging.info("Extracting frames from video ...")
+        vidcap = cv2.VideoCapture(self.__path_in)
+        fps = vidcap.get(cv2.CAP_PROP_FPS)
         success, frame = vidcap.read()
-    vidcap.release()
-    print("Total frames extracted : %d" % len(frames))
-    return fps, frames
+        frames = []
+        while success:
+            frames.append(frame)
+            success, frame = vidcap.read()
+        vidcap.release()
+        logging.debug("Total frames extracted : {}".format(len(frames)))
+        return fps, frames
 
 
-def extract_fps(path):
-    vidcap = cv2.VideoCapture(path)
-    fps = vidcap.get(cv2.CAP_PROP_FPS)
-    return fps
+    def scale_frames(self, frames, scale_x=4, scale_y=4):
+        logging.info('Scaling images')
+        scaled_frames = []
+        for frame in frames:
+           size =  (frame.shape[1],frame.shape[0])
+           scaled_frame = cv2.resize(frame, (0,0), fx=scale_x, fy=scale_y, interpolation=cv2.INTER_CUBIC)
+           scaled_frames.append(scaled_frame)
+        return scaled_frames
 
-def scale_frames(frames, scale_x=4, scale_y=4):
-    print("Scaling images")
-    scaled_frames = []
-    for frame in frames:
-       size =  (frame.shape[1],frame.shape[0])
-       scaled_frame = cv2.resize(frame, (0,0), fx=scale_x, fy=scale_y, interpolation=cv2.INTER_CUBIC)
-       scaled_frames.append(scaled_frame)
-    return scaled_frames
+    def frames_to_video(self, frames, fps):
+        logging.info('Combining frames')
+        fourcc = cv2.VideoWriter_fourcc('D', 'I', 'V', 'X')
+        resolution = frames[0].shape[:2][::-1]
+        out = cv2.VideoWriter(self.__path_out, fourcc, fps, resolution)
+        for frame in frames:
+           out.write(frame)
+        out.release()
 
-# Combine respective frames into a video
-def frames_to_video(frames, fps, pathOut="./out.mp4"):
-    print('Combining frames')
-    fourcc = cv2.VideoWriter_fourcc('D', 'I', 'V', 'X')
-    out = cv2.VideoWriter(pathOut, fourcc, fps, frames[0].shape[:2][::-1])
-    for frame in frames:
-       out.write(frame)
-    out.release()
+    def sync_audio(self):
+        audio_extract_command = "ffmpeg -i {} -f mp3 -ab 192000 -vn out.mp3 -loglevel quiet".format(self.__path_in)
+        audio_merge_command = "ffmpeg -i out.mp4 -i out.mp3 -c:v copy -c:a aac -strict experimental output.mp4 -loglevel quiet"
 
-def scale_video(video_location, dest_path="./out.mp4", scale_x=2, scale_y=2):
-    fps, frames = extract_frames(video_location)  # Choose your PathOut yourself.
-    scaled_frames = scale_frames(frames, scale_x, scale_y)
-    frames_to_video(scaled_frames, fps, dest_path)
+        subprocess.call(audio_extract_command, shell=True)
+        subprocess.call(audio_merge_command, shell=True)
 
 
-if __name__ == '__main__':
-    video_location = 'to_segment.mp4'
-    scale_video(video_location, dest_path="./out.mp4", scale_x=2, scale_y=2)
+    def scale_video(self,scale_x, scale_y):
+        fps, frames = self.extract_frames()
+        scaled_frames = self.scale_frames(frames, scale_x, scale_y)
+        self.frames_to_video(scaled_frames, fps)
+
+if  __name__ == '__main__':
+    video = VideoScaler('to_segment.mp4', './out.mp4')
+    video.scale_video(scale_x = 2, scale_y = 2)
+    video.sync_audio()
 
