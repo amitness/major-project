@@ -26,6 +26,9 @@
   sudo apt-get update
   sudo apt-get install ffmpeg
   ```
+  
+  **Ubuntu 16.04**:  
+  ```sudo add-apt-repository ppa:jonathonf/ffmpeg-3```
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
