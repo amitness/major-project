@@ -1,7 +1,9 @@
 import os
 import cv2
 import subprocess
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
 
 class VideoScaler(object):
 
@@ -9,12 +11,11 @@ class VideoScaler(object):
         if  os.path.exists(path_in):
             self.__path_in = path_in
         else:
-            raise IOError('File does not exist: %s' % path_in)
+            raise IOError('File does not exist: {}'.format(path_in))
         self.__path_out  = path_out
 
-    # Segment video into respective frames.
     def extract_frames(self):
-        print("Extracting frames from video ...")
+        logging.info("Extracting frames from video ...")
         vidcap = cv2.VideoCapture(self.__path_in)
         fps = vidcap.get(cv2.CAP_PROP_FPS)
         success, frame = vidcap.read()
@@ -23,12 +24,12 @@ class VideoScaler(object):
             frames.append(frame)
             success, frame = vidcap.read()
         vidcap.release()
-        print("Total frames extracted : %d" % len(frames))
+        logging.debug("Total frames extracted : {}".format(len(frames)))
         return fps, frames
 
 
     def scale_frames(self, frames, scale_x=4, scale_y=4):
-        print("Scaling images")
+        logging.info('Scaling images')
         scaled_frames = []
         for frame in frames:
            size =  (frame.shape[1],frame.shape[0])
@@ -36,10 +37,10 @@ class VideoScaler(object):
            scaled_frames.append(scaled_frame)
         return scaled_frames
 
-    # Combine respective frames into a video
     def frames_to_video(self, frames, fps):
-        print('Combining frames')
+        logging.info('Combining frames')
         fourcc = cv2.VideoWriter_fourcc('D', 'I', 'V', 'X')
+        # frames[0].shape[:2][::-1] calculates the resolution of the frame.
         out = cv2.VideoWriter(self.__path_out, fourcc, fps, frames[0].shape[:2][::-1])
         for frame in frames:
            out.write(frame)
@@ -54,7 +55,7 @@ class VideoScaler(object):
 
 
     def scale_video(self,scale_x, scale_y):
-        fps, frames = self.extract_frames()  # Choose your PathOut yourself.
+        fps, frames = self.extract_frames()
         scaled_frames = self.scale_frames(frames, scale_x, scale_y)
         self.frames_to_video(scaled_frames, fps)
 
