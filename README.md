@@ -20,7 +20,7 @@
   ```shell
   pip install -r requirements.txt
   ```
-  *Install ffmpeg package
+  * Install ffmpeg package
   ```shell
   sudo add-apt-repository ppa:mc3man/trusty-media
   sudo apt-get update
