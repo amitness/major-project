@@ -44,7 +44,7 @@ class Video(object):
     def scale_video(self,scale_x, scale_y):
         fps, frames = self.extract_frames()  # Choose your PathOut yourself.
         scaled_frames = self.scale_frames(frames, scale_x, scale_y)
-        selfframes_to_video(scaled_frames, fps)
+        self.frames_to_video(scaled_frames, fps)
 
 
 video = Video('to_segment.mp4', './out.mp4')
