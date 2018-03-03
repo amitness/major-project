@@ -2,7 +2,7 @@ import os
 import cv2
 
 
-class Video:
+class Video(object):
 
     def __init__(self, path_in, path_out):
         self.__path_in = path_in
@@ -22,11 +22,6 @@ class Video:
         print("Total frames extracted : %d" % len(frames))
         return fps, frames
 
-
-    def extract_fps(self):
-        vidcap = cv2.VideoCapture(self.__path_in)
-        fps = vidcap.get(cv2.CAP_PROP_FPS)
-        return fps
 
     def scale_frames(self, frames, scale_x=4, scale_y=4):
         print("Scaling images")
@@ -49,7 +44,7 @@ class Video:
     def scale_video(self,scale_x, scale_y):
         fps, frames = self.extract_frames()  # Choose your PathOut yourself.
         scaled_frames = self.scale_frames(frames, scale_x, scale_y)
-        self.frames_to_video(scaled_frames, fps)
+        selfframes_to_video(scaled_frames, fps)
 
 
 video = Video('to_segment.mp4', './out.mp4')
