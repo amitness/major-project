@@ -8,17 +8,23 @@
 
 * In the directory where you placed the cloned repo, create a virtual environment for Python:
   ```shell
-  pip install virtualenv 
+  pip install virtualenv
   virtualenv -p python3 venv
   ```
 * Activate your virtual environment
   ```shell
   source venv/bin/activate
   ```
-  
+
 * Install all required packages:
   ```shell
   pip install -r requirements.txt
+  ```
+  *Install ffmpeg package
+  ```shell
+  sudo add-apt-repository ppa:mc3man/trusty-media
+  sudo apt-get update
+  sudo apt-get install ffmpeg
   ```
 
 ## License
