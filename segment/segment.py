@@ -1,5 +1,6 @@
 import os
 import cv2
+import subprocess
 
 
 class VideoScaler(object):
@@ -44,6 +45,14 @@ class VideoScaler(object):
            out.write(frame)
         out.release()
 
+    def sync_audio(self):
+        audio_extract_command = "ffmpeg -i to_segment.mp4 -f mp3 -ab 192000 -vn out.mp3"
+        audio_merge_command = "ffmpeg -i out.mp4 -i out.mp3 -c:v copy -c:a aac -strict experimental output.mp4"
+
+        subprocess.call(audio_extract_command, shell=True)
+        subprocess.call(audio_merge_command, shell=True)
+
+
     def scale_video(self,scale_x, scale_y):
         fps, frames = self.extract_frames()  # Choose your PathOut yourself.
         scaled_frames = self.scale_frames(frames, scale_x, scale_y)
@@ -52,3 +61,5 @@ class VideoScaler(object):
 if  __name__ == '__main__':
     video = VideoScaler('to_segment.mp4', './out.mp4')
     video.scale_video(scale_x = 2, scale_y = 2)
+    video.sync_audio()
+
