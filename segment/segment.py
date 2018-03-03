@@ -40,7 +40,7 @@ def frames_to_video(frames, fps, pathOut="./out.mp4"):
        out.write(frame)
     out.release()
 
-def scale_video(video_location, dest_path="./out.mp4", scaleX=2, scaleY=2):
+def scale_video(video_location, dest_path="./out.mp4", scale_x=2, scale_y=2):
     fps, frames = extract_frames(video_location)  # Choose your PathOut yourself.
     scaled_frames = scale_frames(frames, scaleX, scaleY)
     frames_to_video(scaled_frames, fps, dest_path)
