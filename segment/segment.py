@@ -47,8 +47,8 @@ class VideoScaler(object):
         out.release()
 
     def sync_audio(self):
-        audio_extract_command = "ffmpeg -i to_segment.mp4 -f mp3 -ab 192000 -vn out.mp3"
-        audio_merge_command = "ffmpeg -i out.mp4 -i out.mp3 -c:v copy -c:a aac -strict experimental output.mp4"
+        audio_extract_command = "ffmpeg -i {} -f mp3 -ab 192000 -vn out.mp3 -loglevel quiet".format(self.__path_in)
+        audio_merge_command = "ffmpeg -i out.mp4 -i out.mp3 -c:v copy -c:a aac -strict experimental output.mp4 -loglevel quiet"
 
         subprocess.call(audio_extract_command, shell=True)
         subprocess.call(audio_merge_command, shell=True)
