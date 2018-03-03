@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css" />
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <section>
+            <br><br>
+            <div id="dropzone">
+                <form action="{% url 'upload' %}" class="dropzone dz-clickable  upload-drop-zone" id="demo-upload">
+                    {% csrf_token %}
+                    <div class="dz-message" style="color: #ccc;">
+                        <div><img src="{% static 'image.png' %}" class="img-fluid"/>
+                        </div>
+                        <h2>Drag here or click to upload.</h2>
+                        <br>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+{% endblock %}
