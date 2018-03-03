@@ -40,8 +40,8 @@ class VideoScaler(object):
     def frames_to_video(self, frames, fps):
         logging.info('Combining frames')
         fourcc = cv2.VideoWriter_fourcc('D', 'I', 'V', 'X')
-        # frames[0].shape[:2][::-1] calculates the resolution of the frame.
-        out = cv2.VideoWriter(self.__path_out, fourcc, fps, frames[0].shape[:2][::-1])
+        resolution = frames[0].shape[:2][::-1]
+        out = cv2.VideoWriter(self.__path_out, fourcc, fps, resolution)
         for frame in frames:
            out.write(frame)
         out.release()
