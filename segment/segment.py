@@ -1,6 +1,8 @@
 import os
 import cv2
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
 
 class VideoScaler(object):
 
@@ -13,7 +15,7 @@ class VideoScaler(object):
 
     # Segment video into respective frames.
     def extract_frames(self):
-        print("Extracting frames from video ...")
+        logging.info("Extracting frames from video ...")
         vidcap = cv2.VideoCapture(self.__path_in)
         fps = vidcap.get(cv2.CAP_PROP_FPS)
         success, frame = vidcap.read()
@@ -22,12 +24,12 @@ class VideoScaler(object):
             frames.append(frame)
             success, frame = vidcap.read()
         vidcap.release()
-        print("Total frames extracted : %d" % len(frames))
+        logging.debug("Total frames extracted : %d" % len(frames))
         return fps, frames
 
 
     def scale_frames(self, frames, scale_x=4, scale_y=4):
-        print("Scaling images")
+        logging.info('Scaling images')
         scaled_frames = []
         for frame in frames:
            size =  (frame.shape[1],frame.shape[0])
@@ -37,7 +39,7 @@ class VideoScaler(object):
 
     # Combine respective frames into a video
     def frames_to_video(self, frames, fps):
-        print('Combining frames')
+        logging.info('Combining frames')
         fourcc = cv2.VideoWriter_fourcc('D', 'I', 'V', 'X')
         out = cv2.VideoWriter(self.__path_out, fourcc, fps, frames[0].shape[:2][::-1])
         for frame in frames:
