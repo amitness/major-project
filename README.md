@@ -30,5 +30,10 @@
   **Ubuntu 16.04**:  
   ```sudo add-apt-repository ppa:jonathonf/ffmpeg-3```
 
+* For webapp, goto the webapp directory and run following command to install required frontend libraries.
+  ```
+  bower install
+  ```
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
