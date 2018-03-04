@@ -60,7 +60,7 @@ class VideoScaler(object):
         self.frames_to_video(scaled_frames, fps)
 
 if  __name__ == '__main__':
-    video = VideoScaler('to_segment.mp4', './out.mp4')
+    video_path = "../webapp/media/to_segment.mp4"
+    video = VideoScaler(video_path, './out.mp4')
     video.scale_video(scale_x = 2, scale_y = 2)
     video.sync_audio()
-
