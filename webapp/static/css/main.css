@@ -1,0 +1,14 @@
+body {
+    background-color: #f5f5f5;
+}
+
+.upload-drop-zone {
+    color: #ccc;
+    border: dashed #ccc;
+    line-height: 100px;
+    text-align: center
+}
+
+.gray-text {
+    color: #9E9E9E;
+}
