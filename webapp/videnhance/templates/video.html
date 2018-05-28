@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block css %}
+    <style>
+        body {
+            padding: 2rem;
+            background: #f8f8f8;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h1>Results</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6 card">
+                <h5 class="card-title mt-2">Original</h5>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <video width="400" controls id="original-video">
+                        <source src="{{ video_url }}" type="video/mp4">
+                        Your browser does not support HTML5 video.
+                    </video>
+                </div>
+            </div>
+            <div class="col-md-6 card">
+                <h5 class="card-title mt-2">Enhanced</h5>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <video width="400" controls id="enhanced-video">
+                        <source src="{{ video_url }}" type="video/mp4">
+                        Your browser does not support HTML5 video.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        checkforVideo();
+
+        function checkforVideo() {
+            var b = setInterval(function () {
+                var video1 = document.getElementById("original-video");
+                var video2 = document.getElementById("enhanced-video");
+                if (video1.readyState >= 3 && video2.readyState >=3) {
+                    $('#original-video').get(0).play();
+                    $('#enhanced-video').get(0).play();
+                    $('#original-video').prop('muted', true)
+                    clearInterval(b);
+                }
+            }, 200);
+        }
+    </script>
+{% endblock %}
