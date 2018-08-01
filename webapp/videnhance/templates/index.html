@@ -53,7 +53,10 @@
 {% block js %}
     <script>
         $(document).ready(function () {
-            $('form input').change(function () {
+
+            $('#file-upload').val('');
+
+            $('#file-upload').change(function () {
                 $('form p').text(this.files.length + " file(s) selected");
                 $(".fa-file-video").css('color', '#454cad');
                 $('#file-upload-btn').text('Uploading...')
