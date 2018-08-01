@@ -37,19 +37,52 @@
 
 {% block js %}
     <script>
+
+        var video1 = document.getElementById("original-video");
+        var video2 = document.getElementById("enhanced-video");
+
+
+        function vidDeviationControl() {
+
+            if ((Math.abs(video1.currentTime - video2.currentTime) > 0.05)) {
+                cancelAnimationFrame(vidDeviationControl);
+
+                video1.pause();
+                video2.pause();
+
+                // set all 3 before new AnimationFrame is drawn.
+                video2.currentTime = video1.currentTime;
+
+                video2.play();
+                video1.play();
+            }
+
+            if (video1.paused || video1.ended) {
+                cancelAnimationFrame(vidDeviationControl);
+                return;
+            } else {
+                requestAnimationFrame(vidDeviationControl);
+            }
+        }
+
+
+        function startVideoInterlace() {
+            video1.play();
+            video2.play();
+            vidDeviationControl();
+        }
+
         checkforVideo();
 
         function checkforVideo() {
             var b = setInterval(function () {
-                var video1 = document.getElementById("original-video");
-                var video2 = document.getElementById("enhanced-video");
-                if (video1.readyState >= 3 && video2.readyState >=3) {
-                    $('#original-video').get(0).play();
-                    $('#enhanced-video').get(0).play();
+                if (video1.readyState >= 3 && video2.readyState >= 3) {
                     $('#original-video').prop('muted', true)
+                    startVideoInterlace();
                     clearInterval(b);
                 }
             }, 200);
         }
+
     </script>
 {% endblock %}
