@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+{% block css %}
+    <style>
+        body {
+            background: #333;
+            margin: 2rem;
+        }
+
+        #video-compare-container {
+            display: inline-block;
+            line-height: 0;
+            position: relative;
+            width: 100%;
+            padding-top: 42.3%;
+        }
+
+        #video-compare-container > video {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            height: 100%;
+        }
+
+        #video-clipper {
+            width: 50%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            overflow: hidden;
+            border: 1px solid white;
+            border-style: none solid none none;
+        }
+
+        #video-clipper video {
+            width: 200%;
+            postion: absolute;
+            height: 100%;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+
+    <div id="video-compare-container">
+        <video loop autoplay poster="https://s3-us-west-2.amazonaws.com/converterpoint-22/thumbnails/e41ff1d6e8c0cafc174a448e1d597fdf.jpg">
+            <source src="{{ video_url }}">
+{#            <source src=https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/floodplain-dirty.webm>#}
+        </video>
+        <div id="video-clipper">
+            <video loop autoplay poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/clean.jpg">
+                <source src="{{ video_url2 }}">
+{#                <source src=https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/floodplain-clean.webm>#}
+            </video>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        function trackLocation(e) {
+            var rect = videoContainer.getBoundingClientRect(),
+                position = ((e.pageX - rect.left) / videoContainer.offsetWidth) * 100;
+            if (position <= 100) {
+                videoClipper.style.width = position + "%";
+                clippedVideo.style.width = ((100 / position) * 100) + "%";
+                clippedVideo.style.zIndex = 3;
+            }
+        }
+
+        var videoContainer = document.getElementById("video-compare-container"),
+            videoClipper = document.getElementById("video-clipper"),
+            clippedVideo = videoClipper.getElementsByTagName("video")[0];
+        videoContainer.addEventListener("mousemove", trackLocation, false);
+        videoContainer.addEventListener("touchstart", trackLocation, false);
+        videoContainer.addEventListener("touchmove", trackLocation, false);
+    </script>
+{% endblock %}
