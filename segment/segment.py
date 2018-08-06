@@ -2,6 +2,7 @@ import os
 import cv2
 import subprocess
 import logging
+from moviepy.editor import VideoFileClip
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -59,8 +60,12 @@ class VideoScaler(object):
         scaled_frames = self.scale_frames(frames, scale_x, scale_y)
         self.frames_to_video(scaled_frames, fps)
 
+    def update_codec(self):
+        clip = VideoFileClip('output.mp4')
+        clip.write_videofile("output_final.mp4")
+
 if  __name__ == '__main__':
-    video_path = "../webapp/media/to_segment.mp4"
-    video = VideoScaler(video_path, './out.mp4')
+    video = VideoScaler('to_segment.mp4', './out.mp4')
     video.scale_video(scale_x = 2, scale_y = 2)
     video.sync_audio()
+    video.update_codec()
