@@ -21,6 +21,6 @@ def save_video(request):
         time.sleep(2)
         # return redirect(full_url)
         # return HttpResponse(template)
-        # return render(request, 'video.html', context={'video_url': full_url})
+        # return render(request, 'video.html', {'video_url': full_url, 'video_url2': full_url2})
         return render(request, 'video2.html', context={'video_url': full_url, 'video_url2': full_url2})
 
