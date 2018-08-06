@@ -1,0 +1,24 @@
+{
+  "name": "webapp",
+  "homepage": "https://github.com/amitness/major-project",
+  "authors": [
+    "Amit <camitiw@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "dropzone": "^5.1.1",
+    "roboto-fontface": "^0.9.0",
+    "components-font-awesome": "^5.0.6"
+  }
+}

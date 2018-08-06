@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css"/>
+{% endblock %}
+{% block content %}
+    {#    <div class="container">#}
+    {#        <section>#}
+    {#            <br><br>#}
+    {#            <div id="dropzone">#}
+    {#                <form action="{% url 'upload' %}" class="dropzone dz-clickable  upload-drop-zone" id="demo-upload">#}
+    {#                    {% csrf_token %}#}
+    {#                    <div class="dz-message" style="color: #ccc;">#}
+    {#                        <div><img src="{% static 'image.png' %}" class="img-fluid"/>#}
+    {#                        </div>#}
+    {#                        <h2>Drag here or click to upload.</h2>#}
+    {#                        <br>#}
+    {#                    </div>#}
+    {#                </form>#}
+    {#            </div>#}
+    {#        </section>#}
+    {#    </div>#}
+    <div class="container">
+    <h2>Video Enhancement</h2>
+    <p class="lead">Deep Learning</p>
+
+    <form id="file-upload-form" class="uploader" action="{% url 'upload' %}" method="POST"
+          enctype="multipart/form-data">
+        {% csrf_token %}
+        <input id="file-upload" type="file" name="fileUpload"/>
+
+        <label for="file-upload" id="file-drag">
+
+            <p>Drag your files here or click in this area.</p>
+            <!--     <img id="file-image" src="#" alt="Preview" class="hidden"> -->
+            <div id="start">
+                <i class="fa fa-file-video" aria-hidden="true"></i>
+                {#                <img src="{% static 'image.png' %}" class="img-fluid"/>#}
+                <div>Select a video or drag here</div>
+                <div id="notimage" class="hidden">Please select an image</div>
+                <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+            </div>
+            <div id="response" class="hidden">
+                <div id="messages"></div>
+                <progress class="progress" id="file-progress" value="0">
+                    <span>0</span>%
+                </progress>
+            </div>
+        </label>
+    </form>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function () {
+
+            $('#file-upload').val('');
+
+            $('#file-upload').change(function () {
+                $('form p').text(this.files.length + " file(s) selected");
+                $(".fa-file-video").css('color', '#454cad');
+                $('#file-upload-btn').text('Uploading...')
+                $("form").trigger("submit");
+            });
+        });
+    </script>
+{% endblock %}

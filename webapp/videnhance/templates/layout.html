@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static 'bower_modules/bootstrap/dist/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'bower_modules/roboto-fontface/css/roboto/roboto-fontface.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'bower_modules/components-font-awesome/css/fontawesome-all.min.css' %}" type="text/css" rel="stylesheet" />
+    {#    <link href="{% static 'bower_modules/dropzone/dist/min/dropzone.min.css' %}" type="text/css" rel="stylesheet" />#}
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+{% endblock %}
+{#<script src="{% static 'bower_modules/dropzone/dist/min/dropzone.min.js' %}"></script>#}
+<script src="{% static 'bower_modules/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'bower_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+{% block js %}
+{% endblock %}
+</body>
+</html>
