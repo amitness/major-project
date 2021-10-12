@@ -13,7 +13,7 @@ Markdown==2.6.11
 matplotlib==2.1.2
 moviepy==0.2.3.5
 numpy==1.14.0
-opencv-python==3.4.0.12
+opencv-python==4.2.0.32
 Pillow==5.2.0
 protobuf==3.5.1
 pyparsing==2.2.0
