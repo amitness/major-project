@@ -15,7 +15,7 @@ moviepy==0.2.3.5
 numpy==1.14.0
 opencv-python==3.4.0.12
 Pillow==5.2.0
-protobuf==3.5.1
+protobuf==3.18.3
 pyparsing==2.2.0
 python-dateutil==2.6.1
 pytz==2018.3
